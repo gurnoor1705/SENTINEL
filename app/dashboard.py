@@ -42,7 +42,7 @@ except httpx.HTTPError as exc:
     st.stop()
 
 # Main reliability metrics
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 
 col1.metric(
     "Total Requests",
@@ -62,6 +62,11 @@ col3.metric(
 col4.metric(
     "Avg Response Time",
     f'{metrics["avg_response_time_ms"]:.2f} ms',
+)
+
+col5.metric(
+    "P95 Latency",
+    f'{metrics["p95_response_time_ms"]:.2f} ms',
 )
 
 st.divider()

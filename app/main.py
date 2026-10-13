@@ -1,6 +1,7 @@
 import logging
 import time
 from uuid import uuid4
+import math
 
 from fastapi import FastAPI, Request
 from app.demo_api.routes import router as demo_router
@@ -123,6 +124,7 @@ async def get_request_history(
     }
 
 
+
 @app.get("/monitoring/metrics")
 async def get_reliability_metrics():
     """Calculate reliability metrics from recorded requests."""
@@ -140,10 +142,22 @@ async def get_reliability_metrics():
             """
         ).fetchone()
 
+        durations = connection.execute(
+            "SELECT duration_ms FROM request_logs ORDER BY duration_ms"
+        ).fetchall()
+
     total = row["total_requests"]
     failed = row["failed_requests"]
+    sorted_durations = [r["duration_ms"] for r in durations]
 
     failure_rate = (failed / total * 100) if total else 0.0
+
+    # Nearest-rank p95 calculation.
+    if sorted_durations:
+        p95_index = math.ceil(0.95 * len(sorted_durations)) - 1
+        p95_latency = sorted_durations[p95_index]
+    else:
+        p95_latency = 0.0
 
     return {
         "total_requests": total,
@@ -152,4 +166,5 @@ async def get_reliability_metrics():
         "avg_response_time_ms": round(
             row["avg_response_time_ms"], 2
         ),
+        "p95_response_time_ms": round(p95_latency, 2),
     }
