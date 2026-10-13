@@ -9,7 +9,7 @@ SENTINEL is a Python-based software reliability monitoring MVP that records API 
 - **Request correlation:** Unique request IDs returned through the `X-Request-ID` response header.
 - **Request logging:** Records HTTP methods, paths, status codes, response durations, and request IDs.
 - **Persistent storage:** SQLite database stores request history across application restarts.
-- **Reliability metrics:** Calculates total requests, HTTP 5xx failures, failure rate, and average response time.
+- **Reliability metrics:** Calculates total requests, HTTP 5xx failures, failure rate, average response time, and p95 response time.
 - **Fault injection:** Simulates HTTP 503 failures and artificial latency, with controls to clear injected faults.
 - **Monitoring dashboard:** Streamlit interface with metric cards, request history, status-code charts, and response-time trends.
 - **Automated tests:** Pytest tests cover health checks, product endpoints, fault injection, and recovery.
@@ -24,6 +24,10 @@ SENTINEL is a Python-based software reliability monitoring MVP that records API 
 - Pandas
 - HTTPX
 - Pytest
+
+## Continuous Integration
+
+GitHub Actions runs the automated test suite on pushes and pull requests.
 
 ## Architecture
 
@@ -58,7 +62,7 @@ SENTINEL is a Python-based software reliability monitoring MVP that records API 
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/gurnoor1705/SENTINEL.git
 cd Sentinel
 ```
 
@@ -118,13 +122,19 @@ The SQLite database is initialized by the application. Request history is collec
 
 ## Running Tests
 
-Ensure the FastAPI server is running, then execute:
+Start the FastAPI server in one terminal:
+
+```powershell
+python -m uvicorn app.main:app --port 8000
+```
+
+In a second terminal, activate the virtual environment and run:
 
 ```powershell
 python -m pytest tests -v
 ```
 
-The current test suite contains seven tests covering health checks, product API behavior, HTTP 503 injection, latency injection, and recovery.
+The test suite contains 10 automated tests covering health checks, product endpoints, fault injection, monitoring metrics, and recovery.
 
 ## Fault Injection Workflow
 
@@ -145,9 +155,7 @@ SENTINEL is an MVP focused on request-level monitoring and controlled fault inje
 
 - Automated reliability experiments and recovery assertions
 - Configurable reliability thresholds and alerting
-- More detailed latency percentiles and failure analysis
 - Dashboard refresh improvements
-- CI workflow for automated testing
 
 ## License
 
