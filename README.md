@@ -153,11 +153,20 @@ SENTINEL is an MVP focused on request-level monitoring and controlled fault inje
 
 Choose and add an appropriate open-source license before distributing the project.
 
-## Screeshots 
+## Screenshots
 
-Monitoring Dashboard 
-The SENTINEL dashboard displays request volume, server failures, failure rate, average response time, p95 latency, and request history. 
+### Monitoring Dashboard
 
-## API Documentation
+The SENTINEL dashboard displays request volume, server failures, failure rate, average response time, p95 latency, and request history.
 
-The interactive FASTAPI documentation allows you to explore and test SENTINEL's API endpoints.
+![SENTINEL Monitoring Dashboard 1](docs/dashboard1.jpeg)
+
+![SENTINEL Monitoring Dashboard 2](docs/dashboard2.jpeg)
+
+### API Documentation
+
+The interactive FastAPI documentation allows you to explore and test SENTINEL's API endpoints.
+
+![SENTINEL API Documentation 1](docs/api-docs1.jpeg)
+
+![SENTINEL API Documentation 2](docs/api-docs2.jpeg)
